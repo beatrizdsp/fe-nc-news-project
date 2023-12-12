@@ -22,6 +22,22 @@
   border-radius: 20px;
   
   }
+  .fancy-box{
+    background-color: #777777;
+    color: black;
+    font-weight: 500;
+    border: 5px solid #777777;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 15px 0;
+    box-shadow: 0 4px 8px white;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .fancy-box:hover{
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px black;
+  }
 
 li{
   list-style-type: none;
