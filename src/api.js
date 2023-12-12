@@ -12,10 +12,10 @@ const ncnews = axios.create({
       });
   };
 
-  export const getArticlesById = (articleid) => {
+  export const getArticlesById = (article_id) => {
     return ncnews
-      .get("/articles")
-      .then(({ data: { articles } }) => {
-        return articles;
+      .get(`/articles/${article_id}`)
+      .then(({ data: { article } }) => {
+        return article;
       });
   };
