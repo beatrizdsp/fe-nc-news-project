@@ -4,3 +4,29 @@
   padding: 2rem;
   text-align: center;
 }
+
+*{
+  border: 2px solid red;
+}
+
+.app-wrapper{
+  background-color: rgb(3, 0, 0);
+  height: fit-content;
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 20px;
+  
+  }
+
+li{
+  list-style-type: none;
+}
+
+img {
+  max-width: 60vw;
+}
