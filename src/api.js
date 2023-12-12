@@ -19,3 +19,11 @@ const ncnews = axios.create({
         return article;
       });
   };
+
+  export const getCommentsById = (article_id) =>{
+    return ncnews
+    .get(`/articles/${article_id}/comments`)
+    .then(({data:{comments}})=>{
+        return comments
+    })
+  }

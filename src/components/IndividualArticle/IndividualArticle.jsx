@@ -1,17 +1,27 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getArticlesById } from "../../api";
+import { getArticlesById,getCommentsById } from "../../api";
 import { Link } from "react-router-dom";
+import CommentList from "../CommentList/CommentList";
 
 function IndividualArticle() {
   const { article_id } = useParams();
   const [isLoading, setIsLoading] = useState(false);
   const [currArticle, setCurrArticle] = useState({});
+
+  const [articleComments, setArticleComments] = useState([]);
+
   useEffect(() => {
     setIsLoading(true);
     getArticlesById(article_id).then((article) => {
       setIsLoading(false);
       setCurrArticle(article);
+    });
+  }, [article_id]);
+
+  useEffect(() => {
+    getCommentsById(article_id).then((comments) => {
+      setArticleComments(comments);
     });
   }, [article_id]);
 
@@ -35,7 +45,10 @@ function IndividualArticle() {
           <p>{body}</p>
         </section>
         <p>Votes: {votes}</p>
+        <div className="comment-list">
         <p>Total Comments: {comment_count}</p>
+          <CommentList key={article_id} articleComments={articleComments} />
+        </div>
       </article>
       <Link to={"/articles"}>
         <button>Back to articles</button>
