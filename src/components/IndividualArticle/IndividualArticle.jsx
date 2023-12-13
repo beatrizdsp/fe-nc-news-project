@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { getArticlesById, getCommentsById, patchArticleVotes } from "../../api";
 import { Link } from "react-router-dom";
 import CommentList from "../CommentList/CommentList";
+import PostComment from "../PostComment/PostComment";
 
 function IndividualArticle() {
   const { article_id } = useParams();
@@ -90,6 +91,9 @@ function handleVoteDecrease(){
                 <button onClick={handleVoteDecrease}>👎</button>
            {voteError && <p style={{ color: 'red' }}>Error adding vote. Please try again.</p>}
         </section>
+        <div className="post-comment">
+            <PostComment article_id = {article_id} articleComments={articleComments} setArticleComments = {setArticleComments} setCurrArticle={setCurrArticle}/>
+        </div>
         <div className="comment-list">
           <p>Total Comments: {comment_count}</p>
           <CommentList key={article_id} articleComments={articleComments} />
