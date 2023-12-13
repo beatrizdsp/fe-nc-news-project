@@ -3,10 +3,12 @@ import "./App.css";
 import AllArticles from "./components/AllArticles/AllArticles";
 import {Navigate, BrowserRouter as Router,Routes,Route} from "react-router-dom";
 import IndividualArticle from "./components/IndividualArticle/IndividualArticle";
+import { UserProvider } from "./contexts/User";
 
 
 function App() {
   return (
+    <UserProvider>
     <Router>
       <div className="app-wrapper">
         <Header/>
@@ -17,6 +19,7 @@ function App() {
     </Routes>
       </div>
       </Router>
+      </UserProvider>
   );
 }
 
