@@ -27,3 +27,8 @@ const ncnews = axios.create({
         return comments
     })
   }
+
+  export const patchArticleVotes = (article_id,article)=>{
+    return ncnews
+    .patch(`/articles/${article_id}`, article)
+  }

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getArticlesById,getCommentsById } from "../../api";
+import { getArticlesById, getCommentsById, patchArticleVotes } from "../../api";
 import { Link } from "react-router-dom";
 import CommentList from "../CommentList/CommentList";
 
@@ -8,7 +8,8 @@ function IndividualArticle() {
   const { article_id } = useParams();
   const [isLoading, setIsLoading] = useState(false);
   const [currArticle, setCurrArticle] = useState({});
-
+  const [counter,setVotes] = useState({votes:0})
+  const [voteError, setVoteError] = useState(false);
   const [articleComments, setArticleComments] = useState([]);
 
   useEffect(() => {
@@ -28,6 +29,44 @@ function IndividualArticle() {
   const { title, topic, author, body, article_img_url, comment_count, votes } =
     currArticle;
 
+function handleVoteIncrease(){
+    setVoteError(false)
+setVotes((currentVotes)=>{
+    counter.votes = currArticle.votes+1;
+    return {...currentVotes}
+})
+
+ patchArticleVotes(article_id,{inc_votes:1})
+ .then(()=>{
+    setCurrArticle((currArticle)=>({
+        ...currArticle, votes: counter.votes,
+     }))
+    return;
+ })
+ .catch(()=>{
+    setVoteError(true)
+ })
+}
+
+function handleVoteDecrease(){
+    setVoteError(false)
+    setVotes((currentVotes)=>{
+        counter.votes = currArticle.votes-1;
+        return {...currentVotes}
+    })
+
+     patchArticleVotes(article_id,{inc_votes:-1})
+     .then(()=>{
+        setCurrArticle((currArticle)=>({
+            ...currArticle, votes: counter.votes,
+         }))
+        return;
+     })
+     .catch(()=>{
+        setVoteError(true)
+     })
+}
+
   if (isLoading) {
     return <p>Page is loading...</p>;
   }
@@ -44,9 +83,15 @@ function IndividualArticle() {
         <section>
           <p>{body}</p>
         </section>
-        <p>Votes: {votes}</p>
+        <section className="vote-article">
+            <p>Votes: {currArticle.votes}</p>
+
+                <button onClick={handleVoteIncrease}>👍</button>
+                <button onClick={handleVoteDecrease}>👎</button>
+           {voteError && <p style={{ color: 'red' }}>Error adding vote. Please try again.</p>}
+        </section>
         <div className="comment-list">
-        <p>Total Comments: {comment_count}</p>
+          <p>Total Comments: {comment_count}</p>
           <CommentList key={article_id} articleComments={articleComments} />
         </div>
       </article>
