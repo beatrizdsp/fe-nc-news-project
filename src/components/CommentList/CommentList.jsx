@@ -14,8 +14,8 @@ function CommentList({ articleComments }) {
                 <FancyBox key={`fancy-box-${comment_id}`}>
                   <li key={comment_id}>
                     <p>Author:{author}</p>
-                    <time dateTime={created_at.slice(0, 10)}>
-                      {created_at.slice(0, 10)}
+                    <time dateTime={created_at.slice(0,10)}>
+                      {created_at.slice(0,10)}
                     </time>
                     <p>{body}</p>
                     <p>{votes}</p>
