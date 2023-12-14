@@ -7,6 +7,7 @@ function DeleteCommentByUser({comment_id,author,articleComments,setArticleCommen
     const [buttonLock,setButtonLock]=useState(false)
     const [unsuccessfulDelete,setUnsuccessfulDelete]=useState(true)
     const [isLoading,setIsLoading] = useState(false)
+    const [error,setError]=useState(false)
 
   const handleDelete = (comment_id) => {
     setIsLoading(true);
@@ -33,19 +34,25 @@ function DeleteCommentByUser({comment_id,author,articleComments,setArticleCommen
         setIsLoading(false);
         setButtonLock(false);
         setUnsuccessfulDelete(true);
+        console.error(err,"Error deleteing comment");
+        setError(true)
       });
   };
 
   if (isLoading) {
     return <p>Page is loading...</p>;
   }
-  console.log(author,username.username,'author','username');
 if(username.username === author){
     return (
       <>
         {!unsuccessfulDelete && (
           <p id="success-msg" style={{ color: "green" }}>
             Comment deleted successfully
+          </p>
+        )}
+        {error && (
+          <p id="error-msg" style={{ color: "red" }}>
+            Error: unable to delete comment. Please try again later.
           </p>
         )}
         <button
