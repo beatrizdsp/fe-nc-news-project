@@ -35,7 +35,7 @@ const ncnews = axios.create({
 
   export const postComment = (article_id,username,body) =>{
     return ncnews
-    .post(`/articles/${article_id}/comments`,{username:username, body:body})
+    .post(`/articles/${article_id}/comments`,{username, body})
     .then(({data})=>{
         return data
     })
