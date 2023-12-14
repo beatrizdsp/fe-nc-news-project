@@ -14,8 +14,8 @@ function App() {
       <div className="app-wrapper">
         <Header/>
     <Routes>
+      <Route path="/" element={< AllArticles />} />
       <Route path='/topics' element={<ArticlesByTopic/>}/>
-      <Route path="/" element={< Navigate to="/articles" />} />
         <Route path="/articles" element={<AllArticles />} />
         <Route path="/articles/:article_id" element={<IndividualArticle />} />
     </Routes>
