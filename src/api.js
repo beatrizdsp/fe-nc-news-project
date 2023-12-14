@@ -37,7 +37,11 @@ const ncnews = axios.create({
     return ncnews
     .post(`/articles/${article_id}/comments`,{username:username, body:body})
     .then(({data})=>{
-        console.log(data);
         return data
     })
+  }
+
+  export const deleteComment = (comment_id)=>{
+return ncnews
+.delete(`/comments/${comment_id}`)
   }

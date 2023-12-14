@@ -7,16 +7,21 @@ function PostComment({ article_id ,articleComments,setArticleComments,setCurrArt
   const [newComment, setNewComment] = useState();
   const [successfulComment, setSuccessfulComment] = useState(null);
   const [buttonLock, setButtonLock] = useState(false);
+  const [isLoading,setIsLoading] = useState(false)
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setButtonLock(true);
+    setIsLoading(true)
     if (!newComment) {
         setSuccessfulComment("empty");
         setButtonLock(false);
+        setIsLoading(false)
     } else {
+        setIsLoading(true)
       postComment(article_id,username.username, newComment)
         .then(({ comment }) => {
+            
                 setArticleComments([{ ...comment }, ...articleComments]);
                 setCurrArticle((currArticle) => {
                   return {
@@ -26,15 +31,20 @@ function PostComment({ article_id ,articleComments,setArticleComments,setCurrArt
         setSuccessfulComment("posted");
           setNewComment("");
           setButtonLock(false);
+          setIsLoading(false)
           return;
         })
         .catch((err) => {
             setSuccessfulComment("error");
           setButtonLock(false);
+          setIsLoading(false)
         });
     }
   };
   
+  if(isLoading){
+    return <p>Page is loading...</p>;
+  }
 
   return (
     <form onSubmit={handleSubmit}>
