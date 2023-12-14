@@ -4,6 +4,7 @@ import AllArticles from "./components/AllArticles/AllArticles";
 import {Navigate, BrowserRouter as Router,Routes,Route} from "react-router-dom";
 import IndividualArticle from "./components/IndividualArticle/IndividualArticle";
 import { UserProvider } from "./contexts/User";
+import ArticlesByTopic from "./components/ArticlesByTopic/ArticlesByTopic";
 
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
       <div className="app-wrapper">
         <Header/>
     <Routes>
+      <Route path='/topics' element={<ArticlesByTopic/>}/>
       <Route path="/" element={< Navigate to="/articles" />} />
         <Route path="/articles" element={<AllArticles />} />
         <Route path="/articles/:article_id" element={<IndividualArticle />} />
