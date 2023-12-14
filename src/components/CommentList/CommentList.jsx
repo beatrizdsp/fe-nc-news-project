@@ -1,9 +1,27 @@
-import { useState, useEffect } from "react";
+import { useEffect,useState } from "react";
 import { getCommentsById } from "../../api";
 import Collapsible from "../Collapsible/Collapsible";
 import FancyBox from "../FancyBox/FancyBox";
+import DeleteCommentByUser from "../DeleteCommentByUser/DeleteCommentByUser";
 
-function CommentList({ articleComments }) {
+function CommentList({ article_id, articleComments,setArticleComments,setCurrArticle}) {
+    const [isLoading,setIsLoading] = useState(false)
+
+    useEffect(() => {
+        setIsLoading(true)
+        getCommentsById(article_id).then((comments) => {
+          setArticleComments(comments);
+          setIsLoading(false)
+        });
+      }, [article_id]);
+        
+        
+
+      if(isLoading){
+        return <p>Page is loading...</p>;
+      }
+
+
   return (
     <section>
       <Collapsible descriptor="comments">
@@ -20,6 +38,9 @@ function CommentList({ articleComments }) {
                     <p>{body}</p>
                     <p>{votes}</p>
                   </li>
+                  <DeleteCommentByUser
+                  comment_id = {comment_id} author={author} articleComments={articleComments} setArticleComments={setArticleComments} setCurrArticle={setCurrArticle}
+                  />
                 </FancyBox>
               );
             }
