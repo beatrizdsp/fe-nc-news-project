@@ -46,7 +46,7 @@ function ArticlesByTopic() {
           <label htmlFor="topics"></label>
           <select
             id="topics"
-            defaultValue="Select topic..."
+            defaultValue=""
             name='topic'
           >
             <option key="selected" value="" disabled hidden>
