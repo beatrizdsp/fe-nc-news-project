@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getArticlesById, getCommentsById, patchArticleVotes } from "../../api";
+import { getArticlesById, patchArticleVotes } from "../../api";
 import { Link } from "react-router-dom";
 import CommentList from "../CommentList/CommentList";
 import PostComment from "../PostComment/PostComment";
@@ -18,12 +18,6 @@ function IndividualArticle() {
     getArticlesById(article_id).then((article) => {
       setIsLoading(false);
       setCurrArticle(article);
-    });
-  }, [article_id]);
-
-  useEffect(() => {
-    getCommentsById(article_id).then((comments) => {
-      setArticleComments(comments);
     });
   }, [article_id]);
 
@@ -96,7 +90,7 @@ function handleVoteDecrease(){
         </div>
         <div className="comment-list">
           <p>Total Comments: {comment_count}</p>
-          <CommentList key={article_id} articleComments={articleComments} />
+          <CommentList article_id={article_id} articleComments={articleComments} setArticleComments={setArticleComments} setCurrArticle={setCurrArticle}/>
         </div>
       </article>
       <Link to={"/articles"}>
