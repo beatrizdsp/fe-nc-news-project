@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { getTopics } from "../../api";
 import  ArticlesList  from "../ArticlesList/ArticlesList";
 import { useSearchParams } from "react-router-dom";
+import RefineArticles from "../RefineArticles/RefineArticles";
+import { Link } from "react-router-dom";
 
 function ArticlesByTopic() {
   const [topics, setTopics] = useState([]);
@@ -40,6 +42,7 @@ function ArticlesByTopic() {
 
 
     return (
+             
       <div className="topics-container">
         <h3>Select topic below:</h3>
         <form onSubmit={handleSubmit}>
@@ -67,19 +70,23 @@ function ArticlesByTopic() {
           </button>
         {searchParams.toString() !== "" ? (
             <div>
+                <RefineArticles
+                searchParams={searchParams}
+                setSearchParams={setSearchParams}
+              />
               <ArticlesList
                 query={searchParams.toString()}
                 searchParams={searchParams}
                 setSearchParams={setSearchParams}
               />
               </div>
+               
         ) : (
-            <ArticlesList 
-            query={searchParams.toString()}
-            searchParams={searchParams}
-            setSearchParams={setSearchParams}
-            />
+            <></>
         )}
+        <Link to={"/articles"}>
+               <button>View all articles</button>
+             </Link>
       </div>
       
     );

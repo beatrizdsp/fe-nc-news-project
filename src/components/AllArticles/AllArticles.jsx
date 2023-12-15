@@ -1,6 +1,7 @@
 import { useSearchParams } from "react-router-dom"
 import ArticlesList from "../ArticlesList/ArticlesList"
 import ArticlesByTopic from "../ArticlesByTopic/ArticlesByTopic"
+import RefineArticles from "../RefineArticles/RefineArticles"
 
 
 function AllArticles(){
@@ -9,7 +10,8 @@ function AllArticles(){
        <>
         <h2> AllArticles</h2>
         <ArticlesByTopic/>
-        <ArticlesList searchParams={searchParams} setSearchParams={setSearchParams}/>
+        <RefineArticles searchParams={searchParams} setSearchParams={setSearchParams}/>
+        <ArticlesList query={searchParams.toString()} searchParams={searchParams} setSearchParams={setSearchParams}/>
         </>
         )
 }
