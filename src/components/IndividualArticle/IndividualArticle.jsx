@@ -4,6 +4,7 @@ import { getArticlesById, patchArticleVotes } from "../../api";
 import { Link } from "react-router-dom";
 import CommentList from "../CommentList/CommentList";
 import PostComment from "../PostComment/PostComment";
+import CustomErrors from "../CustomErrors/CustomErrors";
 
 function IndividualArticle() {
   const { article_id } = useParams();
@@ -12,15 +13,27 @@ function IndividualArticle() {
   const [counter,setVotes] = useState({votes:0})
   const [voteError, setVoteError] = useState(false);
   const [articleComments, setArticleComments] = useState([]);
+  const [error,setError]=useState()
 
   useEffect(() => {
     setIsLoading(true);
     getArticlesById(article_id).then((article) => {
       setIsLoading(false);
       setCurrArticle(article);
-    });
+    }).catch((err)=>{
+      setIsLoading(false);
+      if (err.response) {
+        const { status, data } = err.response;
+        
+        setError({
+          message: data.msg,
+          status: status,
+        });
+      }
+    })
   }, [article_id]);
-
+  
+ 
   const { title, topic, author, body, article_img_url, comment_count, votes } =
     currArticle;
 
@@ -40,6 +53,7 @@ setVotes((currentVotes)=>{
  })
  .catch(()=>{
     setVoteError(true)
+   
  })
 }
 
@@ -65,7 +79,15 @@ function handleVoteDecrease(){
   if (isLoading) {
     return <p>Page is loading...</p>;
   }
-
+  
+if(error){
+  return(
+    <CustomErrors 
+    message={error.message}
+    status={error.status} 
+    />
+  )
+} else{
   return (
     <div className="individual-article">
       <article>
@@ -98,6 +120,8 @@ function handleVoteDecrease(){
       </Link>
     </div>
   );
+
+}
 }
 
 export default IndividualArticle;

@@ -9,6 +9,7 @@ function ArticlesByTopic() {
   const [topics, setTopics] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchParams, setSearchParams] = useSearchParams()
+  const [error,setError]=useState()
 
 
   function handleRemoveFilter(){
@@ -31,16 +32,31 @@ function ArticlesByTopic() {
           setTopics(topics);
           setIsLoading(false);
       })
-      .catch(() => {
+      .catch((err) => {
         setIsLoading(false);
+      if (err.response) {
+        const { status, data } = err.response;
+        
+        setError({
+          message: data.msg,
+          status: status,
+        });
+      }
       });
   },[]);
 
   if (isLoading) {
     return <p>Page is loading...</p>;
   }
-
-
+  if(error){
+    return(
+      <CustomErrors 
+      message={error.message}
+      status={error.status} 
+      />
+    )
+  } else{
+  
     return (
              
       <div className="topics-container">
@@ -90,6 +106,7 @@ function ArticlesByTopic() {
       </div>
       
     );
+        }
   }
 
 
