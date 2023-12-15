@@ -3,6 +3,7 @@ import ArticlesList from "../ArticlesList/ArticlesList"
 import ArticlesByTopic from "../ArticlesByTopic/ArticlesByTopic"
 import RefineArticles from "../RefineArticles/RefineArticles"
 
+
 function AllArticles(){
     const [searchParams,setSearchParams]=useSearchParams()
     return (
