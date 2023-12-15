@@ -3,16 +3,17 @@ import {getArticles} from '../../api'
 import {useState,useEffect} from 'react'
 
 
-function ArticlesList(){
+function ArticlesList({query,searchParams,setSearchParams}){
 const [isLoading, setIsLoading] = useState(true);
 const [articles,setArticles] = useState([])
 
     useEffect(() => {
-        getArticles().then((articles) => {
-          setArticles(articles)
+      setIsLoading(true)
+        getArticles(query).then((articles) => {
           setIsLoading(false)
+          setArticles(articles)
         });
-      });
+      },[query]);
 
       if(isLoading){
         return <p>Page is loading...</p>
@@ -21,7 +22,6 @@ const [articles,setArticles] = useState([])
 
     return (
        <div>
-        ArticlesList
         <ul>
             {articles.map((article)=>{
                 return (

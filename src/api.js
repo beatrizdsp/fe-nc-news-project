@@ -4,9 +4,17 @@ const ncnews = axios.create({
     baseURL: "https://nc-news-qmmk.onrender.com/api",
   });
 
-  export const getArticles = () => {
+  export const getTopics =()=>{
     return ncnews
-      .get("/articles")
+    .get("/topics")
+    .then(({data:{topics}})=>{
+        return topics
+    })
+  }
+
+  export const getArticles = (query) => {
+    return ncnews
+      .get(`/articles?${query}`)
       .then(({ data: { articles } }) => {
         return articles;
       });
@@ -35,7 +43,7 @@ const ncnews = axios.create({
 
   export const postComment = (article_id,username,body) =>{
     return ncnews
-    .post(`/articles/${article_id}/comments`,{username:username, body:body})
+    .post(`/articles/${article_id}/comments`,{username, body})
     .then(({data})=>{
         return data
     })
