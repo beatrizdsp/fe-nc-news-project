@@ -4,11 +4,13 @@ import  ArticlesList  from "../ArticlesList/ArticlesList";
 import { useSearchParams } from "react-router-dom";
 import RefineArticles from "../RefineArticles/RefineArticles";
 import { Link } from "react-router-dom";
+import CustomErrors from "../CustomErrors/CustomErrors";
 
 function ArticlesByTopic() {
   const [topics, setTopics] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchParams, setSearchParams] = useSearchParams()
+  const [error,setError]=useState(null)
 
 
   function handleRemoveFilter(){
@@ -31,8 +33,9 @@ function ArticlesByTopic() {
           setTopics(topics);
           setIsLoading(false);
       })
-      .catch(() => {
+      .catch((err) => {
         setIsLoading(false);
+        setError(err)
       });
   },[]);
 
@@ -40,6 +43,14 @@ function ArticlesByTopic() {
     return <p>Page is loading...</p>;
   }
 
+  if(error){
+    return(
+        <CustomErrors
+        message={error.err.response.data.msg}
+        status={error.err.response.status}
+        />
+    )
+  }
 
     return (
              
