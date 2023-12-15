@@ -49,12 +49,12 @@ function PostComment({ article_id ,articleComments,setArticleComments,setCurrArt
   return (
     <form onSubmit={handleSubmit}>
       {successfulComment === "posted" ? (
-        <p>Your comment has been added</p>
-      ) : successfulComment === "error" ? (
-        <p>Error: your comment could not be added</p>
-      ) : successfulComment === "empty" ? (
-        <p>cannot submit an empty comment</p>
-      ) : null}
+  <p>Your comment has been added</p>
+) : successfulComment === "error" ? (
+  <p>Error: your comment could not be added</p>
+) : successfulComment === "empty" ? (
+  <p>Cannot submit an empty comment</p>
+) : null}
       <label htmlFor="comment-body"></label>
       <textarea
         name="body"
@@ -66,7 +66,6 @@ function PostComment({ article_id ,articleComments,setArticleComments,setCurrArt
         }}
         value={newComment}
         placeholder="..."
-        required
       ></textarea>
       <button className="post-button" disabled={buttonLock}>
         Add new comment
