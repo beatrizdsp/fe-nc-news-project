@@ -6,19 +6,31 @@ import DeleteCommentByUser from "../DeleteCommentByUser/DeleteCommentByUser";
 
 function CommentList({ article_id, articleComments,setArticleComments,setCurrArticle}) {
     const [isLoading,setIsLoading] = useState(false)
+    const [error,setError]=useState(null)
 
     useEffect(() => {
         setIsLoading(true)
         getCommentsById(article_id).then((comments) => {
           setArticleComments(comments);
           setIsLoading(false)
-        });
+        }).catch((err)=>{
+          setError({err})
+        })
       }, [article_id]);
         
         
 
       if(isLoading){
         return <p>Page is loading...</p>;
+      }
+      
+      if(error){
+        return(
+          <CustomErrors 
+          message={error.err.response.data.msg}
+          status={error.err.response.status}
+          />
+        )
       }
 
 
